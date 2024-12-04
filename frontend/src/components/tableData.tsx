@@ -43,7 +43,7 @@ export const DisplayData: React.FC<editPros> = ({ item, index }) => {
                 <td className="border-black border-2 p-4 text-center w-2">
                     {index + 1}
                 </td>
-                <td className="border-black border-2 w-1/4 p-4">
+                <td className="border-black border-2 w-1/4 p-4 hover:text-teal-700">
                     <span
                         onClick={() =>
                             handleCopy(`${item.link}`)
@@ -51,7 +51,7 @@ export const DisplayData: React.FC<editPros> = ({ item, index }) => {
                     >{item.link}
                     </span>
                 </td>
-                <td className="border-black border-2 p-4">
+                <td className="border-black border-2 p-4 hover:text-teal-700">
                     {change === item.shorturl ? (
                         <div className="flex">
                             <input
@@ -75,4 +75,4 @@ export const DisplayData: React.FC<editPros> = ({ item, index }) => {
             </tr>
         </>
     )
-}
+}   

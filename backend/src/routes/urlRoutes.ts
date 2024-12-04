@@ -1,11 +1,12 @@
-import {deleteUrl, editUrl, getUrls, redirectUrl, postUrl, createTable} from '../controllers/urlController';
+import {deleteUrl, editUrl, getUrls, redirectUrl, postUrl} from '../controllers/urlController';
 import { validationMiddleware } from '../middleware/validationMiddleware';
 import { editSchema, urlSchema } from '../schemas/url.schema';
 
 const express = require('express');
 const router = express.Router();
 
-router.get('/create',createTable);
+//to create the table
+// router.get('/create',createTable);
 
 //get all the urls
 router.get('/display',getUrls);
