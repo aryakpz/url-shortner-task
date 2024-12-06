@@ -36,6 +36,7 @@ export const MainPage: React.FC = () => {
         setUrl("");
         setLength(0);
     };
+
     return (
         <>
             <NavBar />
