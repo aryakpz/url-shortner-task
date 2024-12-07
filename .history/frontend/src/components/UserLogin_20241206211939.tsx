@@ -64,5 +64,3 @@ export const UserLogin: React.FC = () => {
         </div>
     );
 };
-
-

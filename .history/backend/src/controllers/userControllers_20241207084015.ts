@@ -122,3 +122,13 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
 };
 
 
+Typing  : [39wpm][91%]
+Focus   : [08hr 56min][1280hr 33min]
+CT      : [08hr 55min][1151hr 23min]
+ACT     : [07hr 02min][1061hr 07min]
+HTML    : [0][15420]
+CSS     : [0][24620]
+JSON    : [0][14731]
+JS      : [474][30502]
+Total   : [474][85343]
+days    : #29
