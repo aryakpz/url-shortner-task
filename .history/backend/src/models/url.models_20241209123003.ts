@@ -1,0 +1,1 @@
+import { Attributes,Primaykey } from '@sequelize/core/decorators';
