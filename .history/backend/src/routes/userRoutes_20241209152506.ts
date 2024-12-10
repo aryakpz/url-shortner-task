@@ -1,0 +1,20 @@
+import { getUser, loginUser, postUser } from "../controllers/userControllers"
+import { validationMiddleware } from "../middleware/validationMiddleware"
+import { userSchema } from "../schemas/user.schema"
+
+
+const express=require('express')
+
+const userRoute =express.Router()
+
+userRoute.get('/get',getUser)
+
+userRoute.post('/post',validationMiddleware(userSchema),postUser)
+
+userRoute.post('/login',userAutheloginUser)
+
+export default userRoute;
+
+
+
+
