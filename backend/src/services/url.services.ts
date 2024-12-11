@@ -13,9 +13,7 @@ export async function getUrlsFromDb(): Promise<any[]> {
                     const newData=rows.map((row:any)=>({
                         ...row,
                         link:`http://localhost:5001/api/${row.shorturl}`
-                    })
-                       
-                    )
+                    }) )
                     resolve(newData);
                 }
             });
@@ -27,7 +25,7 @@ export async function getUrlsFromDb(): Promise<any[]> {
         return [];
     }
 }
-
+//resolve and reject
 // add new url into the db
 export const addUrlToDb = async (url: string, length: number, shorturl: string): Promise<void> => {
     return new Promise((resolve, reject) => {
@@ -87,9 +85,9 @@ export const updateFromDb = (url: string, shorturl: string): Promise<void> => {
 
             console.log(`Update successful: ${this.changes}`);
             resolve();
-        });
+        });  
     });
-};
+};    
 
 
 //redirecting into main url

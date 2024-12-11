@@ -32,3 +32,11 @@ export type editPros={
     item:urlProps;
     index:number
 }
+
+export type formProps={
+    name:string,
+    username:string,
+    password:string
+}[]
+
+// Office@6378#
