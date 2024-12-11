@@ -1,1 +1,0 @@
-import { Attributes,Pr } from "sequelize";

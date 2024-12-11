@@ -1,1 +1,0 @@
-import { Attributes,Prima } from "sequelize";
