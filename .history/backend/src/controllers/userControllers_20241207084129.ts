@@ -1,0 +1,134 @@
+import { constants } from "../constants";
+import { Request, Response, NextFunction } from "express";
+import db from "../database";
+import { addUsersToDb, getSingleUser, getUserFromDb } from "../services/user.services";
+import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config()
+
+//create user
+export const create = async (req: any, res: any, next: NextFunction) => {
+    try {
+        const createUser = `
+            CREATE TABLE IF NOT EXISTS USERTABLE (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                username TEXT NOT NULL UNIQUE,
+                password TEXT NOT NULL
+            )`;
+
+        db.run(createUser, (err: { message: any }) => {
+            if (err) {
+                console.error("Error creating table:", err.message);
+                res.status(constants.SERVER_ERROR).json({ message: "Error creating table", success: false });
+            }
+            res.send('Table created successfully');
+        });
+    } catch (error) {
+        console.error("Error in create function:", error);
+        next(error);
+    }
+};
+
+//add new user
+export const postUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { name, username, password } = req.body;
+        if (!name || !username || !password) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+        const hashedPassword = await hashingPassword(password);
+        await addUsersToDb(name, username, hashedPassword);
+        res.status(201).json({
+            message: "User added successfully",
+            success: true,
+            data: { name }
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+//hashing password function
+async function hashingPassword(password: string): Promise<string> {
+    const newPass = await bcrypt.hash(password, 8)
+    return newPass
+}
+
+//get all the users
+export const getUser = async (req: any, res: any, next: NextFunction) => {
+    try {
+        const data = await getUserFromDb()
+        res.status(201).json({
+            message: "Fetch all users",
+            success: true,
+            data: { data }
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+
+// login in to the home page
+export const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Login endpoint hit");
+
+    try {
+        const { username, password } = req.body;
+
+        // Validate input
+        if (!username || !password) {
+            return res.status(400).json({ message: "Username and password are required." });
+        }
+
+        // Fetch user by username
+        const user = await getSingleUser(username);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        // Compare password
+        const passwordCheck = await bcrypt.compare(password, user.password);
+        if (!passwordCheck) {
+            return res.status(401).json({ message: "Invalid password." });
+        }
+
+        // Check the key is in the env
+        if (!process.env.JWT_KEY) {
+            throw new Error("JWT_KEY is not defined in environment variables.");
+        }
+
+        // Generate token 
+        const token = jwt.sign({ 
+            user:{
+                username:user.username,
+                password:user.password,
+                id:user.id
+            }
+        }, process.env.JWT_KEY, {
+            expiresIn: "1h",
+        });
+
+        res.status(200).json({           
+            message: "Logged in successfully.",
+            success: true,
+            data: { username: user.username, token },
+        });
+    } catch (error) {
+        console.error("Error in loginUser:");
+        next(error);
+    }
+};
+
+
+Typing  : [39wpm][91%]
+Focus   : [08hr 56min][1289hr 29min]
+CT      : [08hr 55min][1159hr 18min]
+ACT     : [07hr 02min][1071hr 07min]
+HTML    : [0][15420]
+CSS     : [0][24620]
+JSON    : [0][14731]
+JS      : [250][30752]
+Total   : [250][85593]
+days    : #30
