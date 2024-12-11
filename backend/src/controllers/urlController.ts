@@ -24,10 +24,10 @@ export const getUrls = async (req: Request, res: Response, next: NextFunction) =
 
 //post a new url to database                         
 export const postUrl = async (req: Request, res: Response, next: NextFunction) => {
-    console.log("jdjnd")
+    // console.log("jdjnd")
     try {
         const { url, length, username } = req.body;
-        console.log("backend", username)
+        // console.log("backend", username)
         const shorturl = generateShortUrl(length);
         await addUrlToDb(url, length, shorturl, username);
         res.status(201).json({
@@ -42,7 +42,7 @@ export const postUrl = async (req: Request, res: Response, next: NextFunction) =
 
 //delete a  url 
 export const deleteUrl = async (req: Request, res: Response, next: NextFunction) => {
-    console.log("delete")
+    // console.log("delete")
     try {
         const { shorturl } = req.params;
         const response = await deleteFromDb(shorturl)
@@ -86,7 +86,7 @@ export const redirectUrl = async (req: any, res: any, next: NextFunction) => {
 
 //get dashboard
 export const getDashboard = async (req: any, res: any, next: NextFunction) => {
-    console.log("svkbiejsvbrnv")
+    // console.log("svkbiejsvbrnv")
     try {
         const username = req.user.username;
         if (!username) {
@@ -94,14 +94,14 @@ export const getDashboard = async (req: any, res: any, next: NextFunction) => {
         }
         const urls = await getCurrentUserUrl(username);
         if (urls.length === 0) {
-            console.log("cj quwdhw")
+            // console.log("cj quwdhw")
             return res.status(200).json({
                 message: "NO urls",
                 status: false,
                 data: []
             })
         }
-        console.log("cj jjj")
+        // console.log("cj jjj")
         const newData = urls.map((item: any) => ({
             ...item.dataValues, link: `http://locahost:5000/${item.shorturl}`
         }))
